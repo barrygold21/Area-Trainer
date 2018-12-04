@@ -15,7 +15,6 @@ namespace Area_Trainer {
     class Program : Globals {
         static void Main() {
             Console.Title = "Area Trainer";
-            Program p = new Program();
             bool flashControl = false;
             do {
                 Console.Clear();
@@ -38,6 +37,7 @@ namespace Area_Trainer {
                 flashControl = !flashControl;
             } while (!Console.KeyAvailable);
             Console.ReadKey(true);
+            Program p = new Program();
             p.MainMenu();
         }
 
@@ -47,14 +47,11 @@ namespace Area_Trainer {
             Console.Write("Error:");
             Console.ForegroundColor = ConsoleColor.White;
             switch (code) {
-                case 1:
-                    Console.Write("Please enter a number!\n");
+                case 1: Console.Write("Please enter a number!\n");
                     break;
-                case 2:
-                    Console.Write("Please enter a valid number! (1 - 4)\n");
+                case 2: Console.Write("Please enter a valid number! (1 - 4)\n");
                     break;
-                default:
-                    Console.Write("Unknown error code.\n");
+                default: Console.Write("Unknown error code.\n");
                     break;
             }
             System.Threading.Thread.Sleep(600);
@@ -112,14 +109,11 @@ namespace Area_Trainer {
                 do {
                     Console.WriteLine($"Question {questionNumber}:");
                     switch (gameType) {
-                        case 1:
-                            Console.WriteLine($"Square\nSide length: {lengths[0]}");
+                        case 1: Console.WriteLine($"Square\nSide length: {lengths[0]}");
                             break;
-                        case 2:
-                            Console.WriteLine($"Rectangle:\nHeight: {lengths[0]}\nWidth: {lengths[1]}");
+                        case 2: Console.WriteLine($"Rectangle:\nHeight: {lengths[0]}\nWidth: {lengths[1]}");
                             break;
-                        case 3:
-                            Console.WriteLine($"Radius of circle: {lengths[0]}");
+                        case 3: Console.WriteLine($"Radius of circle: {lengths[0]}");
                             Console.WriteLine("Use 3.14 instead of Pi for calculations!");
                             break;
                     }
@@ -132,12 +126,10 @@ namespace Area_Trainer {
                 Console.Clear();
                 if (guess == answer) {
                     correct = true;
-                    if (tries == 1) {
-                        Console.WriteLine("You scored two points on this question!");
+                    if (tries == 1) { Console.WriteLine("You scored two points on this question!");
                         scores.Add(2);
                     }
-                    else if (tries == 2) {
-                        Console.WriteLine("You scored one point on this question.");
+                    else if (tries == 2) { Console.WriteLine("You scored one point on this question.");
                         scores.Add(1);
                     }
                 }
@@ -166,6 +158,6 @@ namespace Area_Trainer {
                 case 3: return (lengths[0] * lengths[0] * 3.14);
                 default: return -1;
             }
-        }
+        }   
     }
 }
