@@ -15,30 +15,27 @@ namespace Area_Trainer {
     class Program : Globals {
         static void Main() {
             Console.Title = "Area Trainer";
-            bool flashControl = false;
-            do {
-                Console.Clear();
-                if (flashControl) {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("     Area Trainer     ");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~");
-                    Console.WriteLine("Press any key to start");
-                    System.Threading.Thread.Sleep(600);
-                }
-                else if (!flashControl) {
-                    Console.WriteLine("     Area Trainer     ");
-                    Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Press any key to start");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    System.Threading.Thread.Sleep(600);
-                }
-                flashControl = !flashControl;
-            } while (!Console.KeyAvailable);
-            Console.ReadKey(true);
             Program p = new Program();
-            p.MainMenu();
+            Program g = new Program();
+            if (g.questionNumber <= 10) {
+                int choice = 0;
+                do {
+                    Console.Clear();
+                    Console.WriteLine("Please choose one of the following shapes:\n 1. Square\n 2. Rectangle\n 3. Circle\n 4. Triangle");
+                    Console.WriteLine("\nEnter 5 to quit.");
+                    Console.WriteLine("\nPlease enter the number of your choice:");
+                    string input = Console.ReadLine();
+                    bool numeric = int.TryParse(input, out choice);
+                    if (numeric) {
+                        if (choice <= 4 && choice >= 1) p.Train(choice);
+                        else if (choice != 5) p.Error(2);
+                    }
+                    else p.Error(1);
+                } while (choice != 5);
+            }
+            else Console.WriteLine("You can only complete 10 questions per session!");
+            System.Threading.Thread.Sleep(600);
+            if (g.questions.Count != 0) p.DisplayResults();
         }
 
         void Error(int code) {
@@ -55,28 +52,6 @@ namespace Area_Trainer {
                     break;
             }
             System.Threading.Thread.Sleep(600);
-        }
-
-        void MainMenu() {
-            if (questionNumber <= 10) {
-                int choice = 0;
-                do {
-                    Console.Clear();
-                    Console.WriteLine("Please choose one of the following shapes:\n 1. Square\n 2. Rectangle\n 3. Circle\n 4. Triangle");
-                    Console.WriteLine("\nEnter 5 to quit.");
-                    Console.WriteLine("\nPlease enter the number of your choice:");
-                    string input = Console.ReadLine();
-                    bool numeric = int.TryParse(input, out choice);
-                    if (numeric) {
-                        if (choice <= 4 && choice >= 1) Train(choice);
-                        else if (choice != 5) Error(2);
-                    }
-                    else Error(1);
-                } while (choice != 5);
-            }
-            else Console.WriteLine("You can only complete 10 questions per session!");
-            System.Threading.Thread.Sleep(600);
-            if (questions.Count != 0) DisplayResults();
         }
 
         void DisplayResults() {
