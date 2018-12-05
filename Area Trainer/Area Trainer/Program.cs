@@ -49,7 +49,7 @@ namespace Area_Trainer {
             switch (code) {
                 case 1: Console.Write("Please enter a number!\n");
                     break;
-                case 2: Console.Write("Please enter a valid number! (1 - 4)\n");
+                case 2: Console.Write("Please enter a valid number! (1 - 5)\n");
                     break;
                 default: Console.Write("Unknown error code.\n");
                     break;
@@ -59,22 +59,20 @@ namespace Area_Trainer {
 
         void MainMenu() {
             if (questionNumber <= 10) {
-                bool quit = false;
                 int choice = 0;
                 do {
                     Console.Clear();
-                    Console.WriteLine("Please choose one of the following shapes:\n 1. Square\n 2. Rectangle\n 3. Circle");
-                    Console.WriteLine("\nEnter 4 to quit.");
-                    Console.WriteLine("\n\nPlease enter the number of your choice:");
+                    Console.WriteLine("Please choose one of the following shapes:\n 1. Square\n 2. Rectangle\n 3. Circle\n 4. Triangle");
+                    Console.WriteLine("\nEnter 5 to quit.");
+                    Console.WriteLine("\nPlease enter the number of your choice:");
                     string input = Console.ReadLine();
                     bool numeric = int.TryParse(input, out choice);
                     if (numeric) {
-                        if (choice <= 3 && choice >= 1) Train(choice);
-                        else if (choice == 4) quit = true;
-                        else Error(2);
+                        if (choice <= 4 && choice >= 1) Train(choice);
+                        else if (choice != 5) Error(2);
                     }
                     else Error(1);
-                } while (!quit);
+                } while (choice != 5);
             }
             else Console.WriteLine("You can only complete 10 questions per session!");
             System.Threading.Thread.Sleep(600);
@@ -113,8 +111,10 @@ namespace Area_Trainer {
                             break;
                         case 2: Console.WriteLine($"Rectangle:\nHeight: {lengths[0]}\nWidth: {lengths[1]}");
                             break;
-                        case 3: Console.WriteLine($"Radius of circle: {lengths[0]}");
+                        case 3: Console.WriteLine($"Circle:\nRadius: {lengths[0]}");
                             Console.WriteLine("Use 3.14 instead of Pi for calculations!");
+                            break;
+                        case 4: Console.WriteLine($"Triangle:\nHeight: {lengths[0]}\nBase: {lengths[1]}");
                             break;
                     }
                     Console.WriteLine("\nEnter your guess:");
@@ -144,20 +144,21 @@ namespace Area_Trainer {
             Random r = new Random();
             lengths[0] = r.Next(1, 20);
             lengths[1] = r.Next(1, 20);
-            answer = GetArea(gameType, lengths);
+            answer = GetArea(gameType);
             tries = 0;
             questionNumber++;
             questions.Add(questionNumber);
             return 0;
         }
 
-        double GetArea(int gameType, int[] lengths) {
+        double GetArea(int gameType) {
             switch (gameType) {
                 case 1: return (lengths[0] * lengths[0]);
                 case 2: return (lengths[0] * lengths[1]);
                 case 3: return (lengths[0] * lengths[0] * 3.14);
+                case 4: return ((lengths[0] * lengths[1]) / 2);
                 default: return -1;
             }
-        }   
+        }
     }
 }
